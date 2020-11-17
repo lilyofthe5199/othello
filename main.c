@@ -1,24 +1,32 @@
-#define N 6
 #include <stdio.h>
 #include <stdlib.h>
 
+#define N 6
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
-#define W 0
-#define B 1
+#define WHITE 0
+#define BLACK 1
 
-int gameboard[N][N];
+#define EMPTY 2
+
+char gameboard[N][N];
+int scores[];
 
 int othello()		// 게임 초기화 
 {
-	//memset( gameboard, Empty, sizeof( gameboard ) );
-	gameboard[(N/2)-1][(N/2)-1] = B; // BLACK
-	gameboard[(N/2)+1][(N/2)+1] = B; // BLACK
-	gameboard[(N/2)-1][(N/2)+1] = W; // WHITE
-	gameboard[(N/2)+1][(N/2)-1] = W; // WHITE
+	memset( gameboard, EMPTY, sizeof( gameboard ) );
+	// BLACK
+	gameboard[(N/2)-1][(N/2)-1] = BLACK;
+	gameboard[(N/2)][(N/2)] = BLACK;
+	// WHITE
+	gameboard[(N/2)-1][(N/2)] = WHITE;
+	gameboard[(N/2)][(N/2)-1] = WHITE;
+	// SCORE
+	scores[WHITE] = 2;
+    scores[BLACK] = 2;
 }
 
-int print_othello()	// 배치 상태 출 력 
+void print_othello()	// 배치 상태 출 력 
 {
 	int i;
 	int j;
@@ -29,6 +37,16 @@ int print_othello()	// 배치 상태 출 력
 		printf("%i |", i);
 		for (j=0; j<N; ++j )
         {
+        	if(gameboard[i][j] == WHITE )	// WHITE
+        	{
+        		printf("O");
+			} else if ( gameboard[i][j] == BLACK )	// BLACK
+            {
+                printf("X");
+            } else
+            {
+                printf(" "); // 비어있음 
+            }
         	printf("  ------------- \n");
 		}
 	printf("  ------------- \n");
@@ -40,10 +58,30 @@ void main()
 	print_othello();
 }
 
+
+void check_result( )
+{
+    printf( "<Final score>\n WHITE: %d BLACK: %d\n", scores[WHITE], scores[BLACK] );
+    if ( scores[WHITE] > scores[BLACK] )
+        printf( "WHITE wins.\n");
+    else if ( scores[WHITE] < scores[BLACK] )
+        printf( "BLACK wins.\n");
+    else
+        printf( "Draw game.\n" );
+}
+
+int main()
+{
+	othello();
+	print_othello();
+}
+
 /*
 void main() {
+
 	//필요한 변수들 정의;
 	othello();			// 게임 초기화
+	
 
 	//while (isGameEnd() == 0) {	// Game 종료 조건 확인
 		print_othello();			// 배치 상태 출력 등
@@ -60,4 +98,6 @@ void main() {
 				부적절한 입력임을 출력;
 			}
 		check_result();			// 결과 출력
-}*/
+		
+}
+*/
