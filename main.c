@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define N 6
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
@@ -9,8 +10,12 @@
 
 #define EMPTY 2
 
+#define FALSE 0
+#define TRUE 1
+
 char gameboard[N][N];
-int scores[];
+int direction[8][8][8];
+int scores[2];
 
 int othello()		// 게임 초기화 
 {
@@ -25,6 +30,18 @@ int othello()		// 게임 초기화
 	scores[WHITE] = 2;
     scores[BLACK] = 2;
 }
+
+int over_position( int i, int j )
+{
+    if ( i < 0 || i >= N || j < 0 || j >= N )
+    {
+    	return FALSE;
+	}
+    return TRUE;
+}
+
+
+
 
 void print_othello()	// 배치 상태 출 력 
 {
@@ -52,38 +69,25 @@ void print_othello()	// 배치 상태 출 력
 	printf("  ------------- \n");
 }
 
-void main()
-{
-	othello();
-	print_othello();
-}
-
-
 void check_result( )
 {
-    printf( "<Final score>\n WHITE: %d BLACK: %d\n", scores[WHITE], scores[BLACK] );
+    printf("<Final score>\n");
+	printf("WHITE: %d, BLACK: %d\n", scores[WHITE], scores[BLACK] );
     if ( scores[WHITE] > scores[BLACK] )
-        printf( "WHITE wins.\n");
+        printf( "White wins.\n");
     else if ( scores[WHITE] < scores[BLACK] )
-        printf( "BLACK wins.\n");
+        printf( "Black wins.\n");
     else
         printf( "Draw game.\n" );
 }
 
-int main()
-{
-	othello();
-	print_othello();
-}
 
-/*
 void main() {
 
 	//필요한 변수들 정의;
 	othello();			// 게임 초기화
 	
-
-	//while (isGameEnd() == 0) {	// Game 종료 조건 확인
+	while (isGameEnd() == 0) {	// Game 종료 조건 확인
 		print_othello();			// 배치 상태 출력 등
 		if (배치가 가능한 칸이 있는지 확인)
 				continue;			// 두 playter 모두 배치가 불가능하면 반복문을 빠져나가야 함
@@ -100,4 +104,4 @@ void main() {
 		check_result();			// 결과 출력
 		
 }
-*/
+
