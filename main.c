@@ -102,13 +102,14 @@ int print_othello()	// 배치 상태 출력
 		int opposing_player = (player + 1) % 2; // player 가 0 이면 상대편은 1, player가 1 이면 상대편은 0 
 		int i_flip;
 		int j_flip;
-
+		
+		// 방향 4개: N, W, E, S
 		// N 위쪽
 		i_flip = i - 1;
 		j_flip = j;
 		while (gameboard[i_flip][j_flip] == opposing_player)
 		{
-			gameboard[i][j] = player;
+
 			gameboard[i_flip][j_flip] = player;	// player의 알로 바뀜
 			score[player]++;
 			score[opposing_player]--;
@@ -116,13 +117,12 @@ int print_othello()	// 배치 상태 출력
 			flip[0]++;
 		}
 
-
 		// W 왼쪽
 		i_flip = i;
 		j_flip = j - 1;
 		while (gameboard[i_flip][j_flip] == opposing_player)
 		{
-			gameboard[i][j] = player;
+
 			gameboard[i_flip][j_flip] = player;
 			score[player]++;
 			score[opposing_player]--;
@@ -130,13 +130,12 @@ int print_othello()	// 배치 상태 출력
 			flip[1]++;
 		}
 
-
 		// E 오른쪽
 		i_flip = i;
 		j_flip = j + 1;
 		while (gameboard[i_flip][j_flip] == opposing_player)
 		{
-			gameboard[i][j] = player;
+
 			gameboard[i_flip][j_flip] = player;
 			score[player]++;
 			score[opposing_player]--;
@@ -144,13 +143,12 @@ int print_othello()	// 배치 상태 출력
 			flip[2]++;
 		}
 
-
 		// S 아래쪽
 		i_flip = i + 1;
 		j_flip = j;
 		while (gameboard[i_flip][j_flip] == opposing_player)
 		{
-			gameboard[i][j] = player;
+
 			gameboard[i_flip][j_flip] = player;
 			score[player]++;
 			score[opposing_player]--;
@@ -158,13 +156,13 @@ int print_othello()	// 배치 상태 출력
 			flip[3]++;
 		}
 
-		// 대각선 방향
+		// 대각선 방향 4개: NW, NE, SW, SE 
 		// NW
 		i_flip = i - 1;
 		j_flip = j - 1;
 		while (gameboard[i_flip][j_flip] == opposing_player)
 		{
-			gameboard[i][j] = player;
+
 			gameboard[i_flip][j_flip] = player;
 			score[player]++;
 			score[opposing_player]--;
@@ -173,13 +171,12 @@ int print_othello()	// 배치 상태 출력
 			flip[4]++;
 		}
 
-
 		// NE
 		i_flip = i - 1;
 		j_flip = j + 1;
 		while (gameboard[i_flip][j_flip] == opposing_player)
 		{
-			gameboard[i][j] = player;
+
 			gameboard[i_flip][j_flip] = player;
 			score[player]++;
 			score[opposing_player]--;
@@ -188,13 +185,12 @@ int print_othello()	// 배치 상태 출력
 			flip[5]++;
 		}
 
-
 		// SW
 		i_flip = i + 1;
 		j_flip = j - 1;
 		while (gameboard[i_flip][j_flip] == opposing_player)
 		{
-			gameboard[i][j] = player;
+
 			gameboard[i_flip][j_flip] = player;
 			score[player]++;
 			score[opposing_player]--;
@@ -203,13 +199,12 @@ int print_othello()	// 배치 상태 출력
 			flip[6]++;
 		}
 
-
 		// SE
 		i_flip = i + 1;
 		j_flip = j + 1;
 		while (gameboard[i_flip][j_flip] == opposing_player)
 		{
-			gameboard[i][j] = player;
+			
 			gameboard[i_flip][j_flip] = player;
 			score[player]++;
 			score[opposing_player]--;
@@ -240,6 +235,17 @@ int print_othello()	// 배치 상태 출력
 		return 1;
 	}
 
+	int place_othello(int othello_row, int othello_column)
+	{
+	
+		//input_othello(&othello_row, &othello_column);
+	
+		gameboard[othello_row][othello_column] = player;
+	
+		prompt_flip(othello_row, othello_column);
+	
+	}
+	 
 	void check_result()
 	{
 		
@@ -280,14 +286,15 @@ int print_othello()	// 배치 상태 출력
 
 										// 뒤집기 가능한 칸이 없음??
 				isGameEnd = 1;
-				continue;  // 두 playter 모두 배치가 불가능하면 반복문을 빠져나가야 함
+				// 두 playter 모두 배치가 불가능하면 반복문을 빠져나가야 함
+				continue;  
 			}
 			
 			//배치할 좌표 입력 받기
 			input_othello(&othello_row, &othello_column); 
 
 			if (over_position(othello_row, othello_column) == 1) // 입력 좌표가 0-5, 0-5 범위 내에 있어야 함
-			{	if (prompt_flip(othello_row, othello_column))// 뒤집기 시도 
+			{	if (place_othello(othello_row, othello_column))// 뒤집기 시도 
 				{
 					print_flip(); // 몇개 뒤집었는지 출력
 					change_turn(); // 턴 바꿈
