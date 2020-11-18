@@ -78,11 +78,11 @@ int print_othello()	// 배치 상태 출력
 	{
 		if(player == WHITE)
 		{
-			printf("put a new White othello : ");
+			printf(" put a new White othello : ");
 			scanf("%i %i", othello_row, othello_column);
 		} else
 		{
-			printf("put a new Black othello : ");
+			printf(" put a new Black othello : ");
 			scanf("%i %i", othello_row, othello_column);
 		}
 		
@@ -113,7 +113,6 @@ int print_othello()	// 배치 상태 출력
 			gameboard[i_flip][j_flip] = player;	// player의 알로 바뀜
 			score[player]++;
 			score[opposing_player]--;
-			//i_flip -= 1;
 			flip[0]++;
 		}
 
@@ -126,7 +125,6 @@ int print_othello()	// 배치 상태 출력
 			gameboard[i_flip][j_flip] = player;
 			score[player]++;
 			score[opposing_player]--;
-			//j_flip -= 1;
 			flip[1]++;
 		}
 
@@ -139,7 +137,6 @@ int print_othello()	// 배치 상태 출력
 			gameboard[i_flip][j_flip] = player;
 			score[player]++;
 			score[opposing_player]--;
-			//j_flip += 1;
 			flip[2]++;
 		}
 
@@ -152,7 +149,6 @@ int print_othello()	// 배치 상태 출력
 			gameboard[i_flip][j_flip] = player;
 			score[player]++;
 			score[opposing_player]--;
-			//i_flip += 1;
 			flip[3]++;
 		}
 
@@ -166,8 +162,6 @@ int print_othello()	// 배치 상태 출력
 			gameboard[i_flip][j_flip] = player;
 			score[player]++;
 			score[opposing_player]--;
-			//i_flip -= 1;
-			//j_flip -= 1;
 			flip[4]++;
 		}
 
@@ -180,8 +174,6 @@ int print_othello()	// 배치 상태 출력
 			gameboard[i_flip][j_flip] = player;
 			score[player]++;
 			score[opposing_player]--;
-			//i_flip -= 1;
-			//j_flip += 1;
 			flip[5]++;
 		}
 
@@ -194,8 +186,6 @@ int print_othello()	// 배치 상태 출력
 			gameboard[i_flip][j_flip] = player;
 			score[player]++;
 			score[opposing_player]--;
-			//i_flip += 1;
-			//j_flip -= 1;
 			flip[6]++;
 		}
 
@@ -208,8 +198,6 @@ int print_othello()	// 배치 상태 출력
 			gameboard[i_flip][j_flip] = player;
 			score[player]++;
 			score[opposing_player]--;
-			//i_flip += 1;
-			//j_flip += 1;
 			flip[7]++;
 		}
 
@@ -217,8 +205,17 @@ int print_othello()	// 배치 상태 출력
 	}
 
 	void print_flip()
-	{
-		printf("N:%i W:%i E:%i S:%i NW:%i NE:%i SW:%i SE:%i\n\n", flip[0], flip[1], flip[2], flip[3], flip[4], flip[5], flip[6], flip[7]);
+	{	
+		printf("\n\n < flip result >\n");
+		printf(" N:%i W:%i E:%i S:%i NW:%i NE:%i SW:%i SE:%i\n", flip[0], flip[1], flip[2], flip[3], flip[4], flip[5], flip[6], flip[7]);
+		if(player == WHITE)
+		{
+			printf(" White has flipped %i othellos!\n\n", flip[0]+flip[1]+flip[2]+flip[3]+flip[4]+flip[5]+flip[6]+flip[7]);
+		} else
+		{
+			printf(" Black has flipped %i othellos!\n\n", flip[0]+flip[1]+flip[2]+flip[3]+flip[4]+flip[5]+flip[6]+flip[7]);
+		}
+		
 	}
 
 	int position_able(int i, int j)
@@ -237,18 +234,12 @@ int print_othello()	// 배치 상태 출력
 
 	int place_othello(int othello_row, int othello_column)
 	{
-	
-		//input_othello(&othello_row, &othello_column);
-	
 		gameboard[othello_row][othello_column] = player;
-	
 		prompt_flip(othello_row, othello_column);
-	
 	}
 	 
 	void check_result()
 	{
-		
 		if (score[WHITE] > score[BLACK])	// WHITE 점수가 더 많음
 			printf("White wins.\n");
 		else if (score[WHITE] < score[BLACK])	// BLACK 점수가 더 많음
@@ -260,6 +251,7 @@ int print_othello()	// 배치 상태 출력
 	int print_wrong_input_flip()
 	{
 		printf("invalid input!\n");
+		printf("(no flip happens)\n");
 	}
 
 	int print_wrong_input_range()
