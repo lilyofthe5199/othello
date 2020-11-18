@@ -42,7 +42,7 @@ int print_othello()	// 배치 상태 출력
 {
 	int i;
 	int j;
-	printf( "  0 1 2 3 4 5\n");
+	printf( "\n  0 1 2 3 4 5\n");
     printf( " -------------\n" );
     for ( i=0; i<N; ++i )
     {
@@ -65,7 +65,7 @@ int print_othello()	// 배치 상태 출력
         printf( " -------------\n" );
     }
     printf( "\n" );
-   	printf("WHITE: %d, BLACK: %d\n", score[WHITE], score[BLACK]);
+   	printf(" STATUS - WHITE: %d, BLACK: %d\n\n", score[WHITE], score[BLACK]);
 }
 
 	int change_turn() // player를 바꾼다.
@@ -113,7 +113,7 @@ int print_othello()	// 배치 상태 출력
 			gameboard[i_flip][j_flip] = player;	// player의 알로 바뀜
 			score[player]++;
 			score[opposing_player]--;
-			i_flip -= 1;
+			//i_flip -= 1;
 			flip[0]++;
 		}
 
@@ -126,7 +126,7 @@ int print_othello()	// 배치 상태 출력
 			gameboard[i_flip][j_flip] = player;
 			score[player]++;
 			score[opposing_player]--;
-			j_flip -= 1;
+			//j_flip -= 1;
 			flip[1]++;
 		}
 
@@ -139,7 +139,7 @@ int print_othello()	// 배치 상태 출력
 			gameboard[i_flip][j_flip] = player;
 			score[player]++;
 			score[opposing_player]--;
-			j_flip += 1;
+			//j_flip += 1;
 			flip[2]++;
 		}
 
@@ -152,7 +152,7 @@ int print_othello()	// 배치 상태 출력
 			gameboard[i_flip][j_flip] = player;
 			score[player]++;
 			score[opposing_player]--;
-			i_flip += 1;
+			//i_flip += 1;
 			flip[3]++;
 		}
 
@@ -166,8 +166,8 @@ int print_othello()	// 배치 상태 출력
 			gameboard[i_flip][j_flip] = player;
 			score[player]++;
 			score[opposing_player]--;
-			i_flip -= 1;
-			j_flip -= 1;
+			//i_flip -= 1;
+			//j_flip -= 1;
 			flip[4]++;
 		}
 
@@ -180,8 +180,8 @@ int print_othello()	// 배치 상태 출력
 			gameboard[i_flip][j_flip] = player;
 			score[player]++;
 			score[opposing_player]--;
-			i_flip -= 1;
-			j_flip += 1;
+			//i_flip -= 1;
+			//j_flip += 1;
 			flip[5]++;
 		}
 
@@ -194,8 +194,8 @@ int print_othello()	// 배치 상태 출력
 			gameboard[i_flip][j_flip] = player;
 			score[player]++;
 			score[opposing_player]--;
-			i_flip += 1;
-			j_flip -= 1;
+			//i_flip += 1;
+			//j_flip -= 1;
 			flip[6]++;
 		}
 
@@ -208,8 +208,8 @@ int print_othello()	// 배치 상태 출력
 			gameboard[i_flip][j_flip] = player;
 			score[player]++;
 			score[opposing_player]--;
-			i_flip += 1;
-			j_flip += 1;
+			//i_flip += 1;
+			//j_flip += 1;
 			flip[7]++;
 		}
 
@@ -257,11 +257,16 @@ int print_othello()	// 배치 상태 출력
 			printf("Draw game.\n");
 	}
 
-	int print_wrong_input()
+	int print_wrong_input_flip()
 	{
-		printf("invalid input!");
+		printf("invalid input!\n");
 	}
 
+	int print_wrong_input_range()
+	{
+		printf("invalid input!");
+		printf("(should be less than 6)\n");
+	}
 	
 	int main()
 	{
@@ -289,24 +294,27 @@ int print_othello()	// 배치 상태 출력
 				// 두 playter 모두 배치가 불가능하면 반복문을 빠져나가야 함
 				continue;  
 			}
-			
+		
 			//배치할 좌표 입력 받기
 			input_othello(&othello_row, &othello_column); 
-
-			if (over_position(othello_row, othello_column) == 1) // 입력 좌표가 0-5, 0-5 범위 내에 있어야 함
-			{	if (place_othello(othello_row, othello_column))// 뒤집기 시도 
+			
+			// 입력 좌표가 0-5, 0-5 범위 내에 있어야 함
+			if (over_position(othello_row, othello_column) == 1)
+			{	
+				// 뒤집기 시도
+				if (place_othello(othello_row, othello_column))
 				{
 					print_flip(); // 몇개 뒤집었는지 출력
 					change_turn(); // 턴 바꿈
 				}
 				else
 					// flip 못함
-					print_wrong_input();	// 부적절한 입력임을 출력
-										 
+					print_wrong_input_flip();	// 부적절한 입력임을 출력		 
 			}
 			else
 				// 범위내에 없음
-				print_wrong_input();		
+				print_wrong_input_range();
+					
 		}
 		
 		check_result();			// 결과 출력 
