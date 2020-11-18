@@ -12,142 +12,297 @@
 #define FALSE 0
 #define TRUE 1
 
-char gameboard[N][N];
-int direction[8][8][8];
-int scores[2];
+char gameboard[N][N];	// gameboard[i][j]
+int direction[N][N][8];	// direction[i][j][8] 방향 8개
+int score[2];
 int player;
-
+int flip[8];
+int isGameEnd = 0;
 
 int othello()		// 게임 초기화 
 {
- 	memset( gameboard, EMPTY, sizeof( gameboard ) );
-	// BLACK
-	gameboard[(N/2)-1][(N/2)-1] = BLACK;
-	gameboard[(N/2)][(N/2)] = BLACK;
+	memset(gameboard, EMPTY, sizeof(gameboard));
 	// WHITE
-	gameboard[(N/2)-1][(N/2)] = WHITE;
-	gameboard[(N/2)][(N/2)-1] = WHITE;
+	gameboard[(N / 2) - 1][(N / 2) - 1] = WHITE;
+	gameboard[(N / 2)][(N / 2)] = WHITE;
+	// BLACK
+	gameboard[(N / 2) - 1][(N / 2)] = BLACK;
+	gameboard[(N / 2)][(N / 2) - 1] = BLACK;
 	// SCORE
-	scores[WHITE] = 2;
-    scores[BLACK] = 2;
+	score[WHITE] = 2;
+	score[BLACK] = 2;
+	player = WHITE;
 }
 
-void print_othello()	// 배치 상태 출 력 
+int print_othello()	// 배치 상태 출력 
 {
 	int i;
 	int j;
-	printf("   0 1 2 3 4 5 \n");
-	printf("  ------------- \n");
-	for (i=0; i<N; ++i)
-	{
-		printf("%i |", i);
-		for (j=0; j<N; ++j )
-        {/*
-        	if(gameboard[i][j] == WHITE )	// WHITE
-        	{
-        		printf("O");
-			} else if ( gameboard[i][j] == BLACK )	// BLACK
+	printf( "  0 1 2 3 4 5\n");
+    printf( " -------------\n" );
+    for ( i=0; i<N; ++i )
+    {
+        printf( "%i|", i );
+        for ( j=0; j<N; ++j )
+        {
+            if ( gameboard[i][j] == WHITE )	// WHITE
+            {
+                printf("O");
+            } else if ( gameboard[i][j] == BLACK )	// BLACK
             {
                 printf("X");
             } else
             {
                 printf(" "); // 비어있음 
-            }*/
-        	printf("  ------------- \n");
+            }
+            printf("|");
+        }
+        printf( "\n" );
+        printf( " -------------\n" );
+    }
+    printf( "\n" );
+}
+
+	int change_turn() // player를 바꾼다.
+	{
+		player = (player + 1) % 2; // player 값을 0 1 0 1 바꿈 
+	}
+
+
+	int input_othello(int *othello_row, int *othello_column)
+	{
+		printf("put a new othello : ");
+		scanf("%i %i", othello_row, othello_column);
+	}
+
+	int over_position(int row, int column) // 입력 좌표가 0-5, 0-5 범위 내에 있어야 함
+	{
+		if ((row < 0) || (row >= N) || (column < 0) || (column >= N))
+		{
+			return 0;
 		}
-	printf("  ------------- \n");
-}
-
-/*
-int over_position( int i, int j )
-{
-    if ( i < 0 || i >= N || j < 0 || j >= N )
-    {
-    	return FALSE;
+		return 1;
 	}
-    return TRUE;
-}
 
-void change_turn()
-{
-	player = (player +1)%2; // player 값을 0 1 0 1 바꿈 
-}
-
-
-void input_othello(int *othello_row, int *othello_column)
-{
-	printf("put a new white othello : ");
-	scanf( "%d %d", othello_row, othello_column );
-}
-
-int over_position(int row, int column) // 입력 좌표가 0-5, 0-5 범위 내에 있어야 함
-{
-	if( (row <0 )||(row>=N)||(column<0)||(column>=N))
+	int prompt_flip(int i, int j) // 뒤집기 시도
 	{
-		return 0;
-	}
-	return 1;
-}
+		int opposing_player = (player + 1) % 2; // player 가 0 이면 상대편은 1, player가 1 이면 상대편은 0 
+		int i_flip;
+		int j_flip;
 
-void prompt_flip() // 뒤집기 시도
-{
-}
+		// N 위쪽
+		i_flip = i - 1;
+		j_flip = j;
+		while (gameboard[i_flip][j_flip] == opposing_player)
+		{
+			gameboard[i_flip][j_flip] = player;	// player의 알로 바뀜
+			score[player]++;
+			score[opposing_player]--;
+			i_flip -= 1;
+			flip[0]++;
+		}
 
-void position_able()
-{
-	if((score[EMPTY] == 0)||(score[WHITE] == 0)||(score[BLACK] == 0))
-	{
-		return = 0;
-	}
-	return = 1;
-}
 
-void check_result( )
-{
-    printf("<Final score>\n");
-	printf("WHITE: %d, BLACK: %d\n", scores[WHITE], scores[BLACK] );
-    if ( scores[WHITE] > scores[BLACK] )
-        printf( "White wins.\n");
-    else if ( scores[WHITE] < scores[BLACK] )
-        printf( "Black wins.\n");
-    else
-        printf( "Draw game.\n" );
-}
+		// W 왼쪽
+		i_flip = i;
+		j_flip = j - 1;
+		while (gameboard[i_flip][j_flip] == opposing_player)
+		{
+			gameboard[i_flip][j_flip] = player;
+			score[player]++;
+			score[opposing_player]--;
+			j_flip -= 1;
+			flip[1]++;
+		}
 
-int print_wrong_input()
-{
-	printf("invalid input!");
-}
 
-void main() {
+		// E 오른쪽
+		i_flip = i;
+		j_flip = j + 1;
+		while (gameboard[i_flip][j_flip] == opposing_player)
+		{
+			gameboard[i_flip][j_flip] = player;
+			score[player]++;
+			score[opposing_player]--;
+			j_flip += 1;
+			flip[2]++;
+		}
 
-	//필요한 변수들 정의;
-	othello();			// 게임 초기화
+
+		// S 아래쪽
+		i_flip = i + 1;
+		j_flip = j;
+		while (gameboard[i_flip][j_flip] == opposing_player)
+		{
+			gameboard[i_flip][j_flip] = player;
+			score[player]++;
+			score[opposing_player]--;
+			i_flip += 1;
+			flip[3]++;
+		}
+
+		// 대각선 방향
+		// NW
+		i_flip = i - 1;
+		j_flip = j - 1;
+		while (gameboard[i_flip][j_flip] == opposing_player)
+		{
+			gameboard[i_flip][j_flip] = player;
+			score[player]++;
+			score[opposing_player]--;
+			i_flip -= 1;
+			j_flip -= 1;
+			flip[4]++;
+		}
+
+
+		// NE
+		i_flip = i - 1;
+		j_flip = j + 1;
+		while (gameboard[i_flip][j_flip] == opposing_player)
+		{
+			gameboard[i_flip][j_flip] = player;
+			score[player]++;
+			score[opposing_player]--;
+			i_flip -= 1;
+			j_flip += 1;
+			flip[5]++;
+		}
+
+
+		// SW
+		i_flip = i + 1;
+		j_flip = j - 1;
+		while (gameboard[i_flip][j_flip] == opposing_player)
+		{
+			gameboard[i_flip][j_flip] = player;
+			score[player]++;
+			score[opposing_player]--;
+			i_flip += 1;
+			j_flip -= 1;
+			flip[6]++;
+		}
+
+
+		// SE
+		i_flip = i + 1;
+		j_flip = j + 1;
+		while (gameboard[i_flip][j_flip] == opposing_player)
+		{
+			gameboard[i_flip][j_flip] = player;
+			score[player]++;
+			score[opposing_player]--;
+			i_flip += 1;
+			j_flip += 1;
+			flip[7]++;
+		}
+
 	
-	while (isGameEnd() == 0) {	// Game 종료 조건 확인
-		print_othello();			// 배치 상태 출력 등
-		if (position_able() == 1) // 배치가능한 칸이 있는지 확인
-		// 비어있는 칸 없음
-		// WHITE가 없음
-		// BLACK이 없음
-		// 뒤집기가 가능한 칸이 없음 
-				continue;			// 두 playter 모두 배치가 불가능하면 반복문을 빠져나가야 함
-			input_othello(int *othello_row, int *othello_column); //배치할 좌표 입력 받기
+	}
+
+	void print_flip()
+	{
+		printf("N:%i W:%i E:%i S:%i NW:%i NE:%i SW:%i SE:%i", flip[0], flip[1], flip[2], flip[3], flip[4], flip[5], flip[6], flip[7]);
+	}
+
+	int position_able(int row, int column)
+	{
+
+		if ((score[EMPTY] == 0) || (score[WHITE] == 0) || (score[BLACK] == 0))
+		{
+			return 0;
+
+		}
 		
-		if (over_position(&othello_row, &othello_column) == 1) // 입력 좌표가 0-5, 0-5 범위 내에 있어야 함
-			if (prompt_flip())// 뒤집기 시도 
+		if (over_position(row, column) == 0)
+		{
+			return 0;
+
+		}
+		return 1;
+	}
+
+	void check_result()
+	{
+		printf("<Final score>\n");
+		printf("WHITE: %d, BLACK: %d\n", score[WHITE], score[BLACK]);
+		if (score[WHITE] > score[BLACK])	// WHITE 점수가 더 많음
+			printf("White wins.\n");
+		else if (score[WHITE] < score[BLACK])	// BLACK 점수가 더 많음
+			printf("Black wins.\n");
+		else
+			printf("Draw game.\n");
+	}
+
+	int print_wrong_input()
+	{
+		printf("invalid input!");
+	}
+
+	/*
+	int main()
+	{
+		//필요한 변수들 정의
+		int row;
+		int column;
+		int othello_row;
+		int othello_column;
+		
+		othello();			// 게임 초기화
+
+		while (isGameEnd == 0) // Game 종료 조건 확인
+		{	
+			print_othello();			// 배치 상태 출력 등
+			
+			if (position_able(row, column) == 0)	// 배치가능한 칸이 있는지 확인
 			{
-				몇개 뒤집었는지 출력;
-				change_turn() //턴 바꿈
+										// 비어있는 칸 없음
+										// WHITE가 없음
+										// BLACK이 없음
+
+										// 뒤집기 가능한 칸이 없음
+				isGameEnd = 1;
+				continue;  // 두 playter 모두 배치가 불가능하면 반복문을 빠져나가야 함
 			}
-			else
-				print_wrong_input();//부적절한 입력임을 출력
-			}
-		check_result();			// 결과 출력
+			
+			input_othello(&othello_row, &othello_column); //배치할 좌표 입력 받기
+
+			if (over_position(&othello_row, &othello_column) == 1) // 입력 좌표가 0-5, 0-5 범위 내에 있어야 함
+			{	if (prompt_flip(&othello_row, &othello_column))// 뒤집기 시도 
+				{
+					print_flip(); // 몇개 뒤집었는지 출력
+					change_turn(); //턴 바꿈
+				}
+				else
+					print_wrong_input();// 부적절한 입력임을 출력
+										// 범위내에 없음 or flip 못함 
+			}		
+		}
+		check_result();			// 결과 출력 
+
+	}
+	*/
+	int main(){
+		int row;
+		int column;
+		int othello_row;
+		int othello_column;
 		
-}
-*/
-void main(){
-	othello();
-	print_othello();
-}
+		othello();
+		print_othello();
+		input_othello(&othello_row, &othello_column);
+		
+		if (over_position(othello_row, othello_column) == 1) // 입력 좌표가 0-5, 0-5 범위 내에 있어야 함
+		{		if (prompt_flip(othello_row, othello_column))// 뒤집기 시도 
+				{
+					print_flip(); // 몇개 뒤집었는지 출력
+					change_turn(); //턴 바꿈
+				}
+				else
+					print_wrong_input();// 부적절한 입력임을 출력
+										// 범위내에 없음 or flip 못함 
+				
+		}
+	} 
+	
+
