@@ -7,13 +7,17 @@
 
 #define WHITE 0
 #define BLACK 1
-#define EMPTY 2
+#define EMPTY 2	// 비어있음 
 
 #define FALSE 0
 #define TRUE 1
 
-char gameboard[N][N];	// gameboard[i][j]
-int direction[N][N][8];	// direction[i][j][8] 방향 8개
+// gameboard[i][j]
+char gameboard[N][N];
+
+// direction[i][j][8] 
+int direction[N][N][8]; // i, j 위치에서 방향 8개: N, W, E, S, NW, NE, SW, SE
+
 int score[2];
 int player;
 int flip[8];
@@ -61,6 +65,7 @@ int print_othello()	// 배치 상태 출력
         printf( " -------------\n" );
     }
     printf( "\n" );
+   	printf("WHITE: %d, BLACK: %d\n", score[WHITE], score[BLACK]);
 }
 
 	int change_turn() // player를 바꾼다.
@@ -71,8 +76,16 @@ int print_othello()	// 배치 상태 출력
 
 	int input_othello(int *othello_row, int *othello_column)
 	{
-		printf("put a new othello : ");
-		scanf("%i %i", othello_row, othello_column);
+		if(player == WHITE)
+		{
+			printf("put a new White othello : ");
+			scanf("%i %i", othello_row, othello_column);
+		} else
+		{
+			printf("put a new Black othello : ");
+			scanf("%i %i", othello_row, othello_column);
+		}
+		
 	}
 
 	int over_position(int row, int column) // 입력 좌표가 0-5, 0-5 범위 내에 있어야 함
@@ -95,6 +108,7 @@ int print_othello()	// 배치 상태 출력
 		j_flip = j;
 		while (gameboard[i_flip][j_flip] == opposing_player)
 		{
+			gameboard[i][j] = player;
 			gameboard[i_flip][j_flip] = player;	// player의 알로 바뀜
 			score[player]++;
 			score[opposing_player]--;
@@ -108,6 +122,7 @@ int print_othello()	// 배치 상태 출력
 		j_flip = j - 1;
 		while (gameboard[i_flip][j_flip] == opposing_player)
 		{
+			gameboard[i][j] = player;
 			gameboard[i_flip][j_flip] = player;
 			score[player]++;
 			score[opposing_player]--;
@@ -121,6 +136,7 @@ int print_othello()	// 배치 상태 출력
 		j_flip = j + 1;
 		while (gameboard[i_flip][j_flip] == opposing_player)
 		{
+			gameboard[i][j] = player;
 			gameboard[i_flip][j_flip] = player;
 			score[player]++;
 			score[opposing_player]--;
@@ -134,6 +150,7 @@ int print_othello()	// 배치 상태 출력
 		j_flip = j;
 		while (gameboard[i_flip][j_flip] == opposing_player)
 		{
+			gameboard[i][j] = player;
 			gameboard[i_flip][j_flip] = player;
 			score[player]++;
 			score[opposing_player]--;
@@ -147,6 +164,7 @@ int print_othello()	// 배치 상태 출력
 		j_flip = j - 1;
 		while (gameboard[i_flip][j_flip] == opposing_player)
 		{
+			gameboard[i][j] = player;
 			gameboard[i_flip][j_flip] = player;
 			score[player]++;
 			score[opposing_player]--;
@@ -161,6 +179,7 @@ int print_othello()	// 배치 상태 출력
 		j_flip = j + 1;
 		while (gameboard[i_flip][j_flip] == opposing_player)
 		{
+			gameboard[i][j] = player;
 			gameboard[i_flip][j_flip] = player;
 			score[player]++;
 			score[opposing_player]--;
@@ -175,6 +194,7 @@ int print_othello()	// 배치 상태 출력
 		j_flip = j - 1;
 		while (gameboard[i_flip][j_flip] == opposing_player)
 		{
+			gameboard[i][j] = player;
 			gameboard[i_flip][j_flip] = player;
 			score[player]++;
 			score[opposing_player]--;
@@ -189,6 +209,7 @@ int print_othello()	// 배치 상태 출력
 		j_flip = j + 1;
 		while (gameboard[i_flip][j_flip] == opposing_player)
 		{
+			gameboard[i][j] = player;
 			gameboard[i_flip][j_flip] = player;
 			score[player]++;
 			score[opposing_player]--;
@@ -202,30 +223,26 @@ int print_othello()	// 배치 상태 출력
 
 	void print_flip()
 	{
-		printf("N:%i W:%i E:%i S:%i NW:%i NE:%i SW:%i SE:%i", flip[0], flip[1], flip[2], flip[3], flip[4], flip[5], flip[6], flip[7]);
+		printf("N:%i W:%i E:%i S:%i NW:%i NE:%i SW:%i SE:%i\n\n", flip[0], flip[1], flip[2], flip[3], flip[4], flip[5], flip[6], flip[7]);
 	}
 
-	int position_able(int row, int column)
+	int position_able(int i, int j)
 	{
 
-		if ((score[EMPTY] == 0) || (score[WHITE] == 0) || (score[BLACK] == 0))
+		if ((gameboard[i][j] != EMPTY) || (score[WHITE] == 0) || (score[BLACK] == 0))
 		{
 			return 0;
-
 		}
-		
-		if (over_position(row, column) == 0)
+		if (over_position(i, j) == 0)
 		{
 			return 0;
-
 		}
 		return 1;
 	}
 
 	void check_result()
 	{
-		printf("<Final score>\n");
-		printf("WHITE: %d, BLACK: %d\n", score[WHITE], score[BLACK]);
+		
 		if (score[WHITE] > score[BLACK])	// WHITE 점수가 더 많음
 			printf("White wins.\n");
 		else if (score[WHITE] < score[BLACK])	// BLACK 점수가 더 많음
@@ -239,7 +256,7 @@ int print_othello()	// 배치 상태 출력
 		printf("invalid input!");
 	}
 
-	/*
+	
 	int main()
 	{
 		//필요한 변수들 정의
@@ -254,55 +271,40 @@ int print_othello()	// 배치 상태 출력
 		{	
 			print_othello();			// 배치 상태 출력 등
 			
-			if (position_able(row, column) == 0)	// 배치가능한 칸이 있는지 확인
+			// 배치가능한 칸이 있는지 확인
+			if (position_able(row, column) == 0)	
 			{
 										// 비어있는 칸 없음
 										// WHITE가 없음
 										// BLACK이 없음
 
-										// 뒤집기 가능한 칸이 없음
+										// 뒤집기 가능한 칸이 없음??
 				isGameEnd = 1;
 				continue;  // 두 playter 모두 배치가 불가능하면 반복문을 빠져나가야 함
 			}
 			
-			input_othello(&othello_row, &othello_column); //배치할 좌표 입력 받기
+			//배치할 좌표 입력 받기
+			input_othello(&othello_row, &othello_column); 
 
-			if (over_position(&othello_row, &othello_column) == 1) // 입력 좌표가 0-5, 0-5 범위 내에 있어야 함
-			{	if (prompt_flip(&othello_row, &othello_column))// 뒤집기 시도 
+			if (over_position(othello_row, othello_column) == 1) // 입력 좌표가 0-5, 0-5 범위 내에 있어야 함
+			{	if (prompt_flip(othello_row, othello_column))// 뒤집기 시도 
 				{
 					print_flip(); // 몇개 뒤집었는지 출력
-					change_turn(); //턴 바꿈
+					change_turn(); // 턴 바꿈
 				}
 				else
-					print_wrong_input();// 부적절한 입력임을 출력
-										// 범위내에 없음 or flip 못함 
-			}		
+					// flip 못함
+					print_wrong_input();	// 부적절한 입력임을 출력
+										 
+			}
+			else
+				// 범위내에 없음
+				print_wrong_input();		
 		}
+		
 		check_result();			// 결과 출력 
 
 	}
-	*/
-	int main(){
-		int row;
-		int column;
-		int othello_row;
-		int othello_column;
-		
-		othello();
-		print_othello();
-		input_othello(&othello_row, &othello_column);
-		
-		if (over_position(othello_row, othello_column) == 1) // 입력 좌표가 0-5, 0-5 범위 내에 있어야 함
-		{		if (prompt_flip(othello_row, othello_column))// 뒤집기 시도 
-				{
-					print_flip(); // 몇개 뒤집었는지 출력
-					change_turn(); //턴 바꿈
-				}
-				else
-					print_wrong_input();// 부적절한 입력임을 출력
-										// 범위내에 없음 or flip 못함 
-				
-		}
-	} 
+
 	
 
