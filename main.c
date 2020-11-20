@@ -168,7 +168,7 @@ int isGameEnd = 0;
 			i_flip -= 1;
 			j_flip -= 1;
 		}
-		if (o(over_position(i_flip, j_flip) == 1) &&(gameboard[i_flip][j_flip] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
+		if ((over_position(i_flip, j_flip) == 1) &&(gameboard[i_flip][j_flip] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
 			direction[i][j][4] = 1;
 			return 1; // 뒤집기 가능하다
 		}
@@ -487,6 +487,3 @@ int isGameEnd = 0;
 		check_result();		// 결과 출력 
 
 	}
-
-	
-
