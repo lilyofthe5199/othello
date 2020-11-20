@@ -15,7 +15,7 @@ char gameboard[N][N];
 // direction[i][j][8] 
 int direction[N][N][8]; // i, j 위치에서 방향 8개: N, W, E, S, NW, NE, SW, SE
 
-int score[2];
+int score[2];	// WHITE와 BLACK의 score
 int player;
 int flip[8];
 int isGameEnd = 0;
@@ -420,6 +420,7 @@ int isGameEnd = 0;
 	int place_othello(int othello_row, int othello_column){
 		 
 		gameboard[othello_row][othello_column] = player;	// 해당위치에 player의 알을 둠 
+		score[player]++;
 		prompt_flip(othello_row, othello_column);			// flip 시도
 	}
 	 
