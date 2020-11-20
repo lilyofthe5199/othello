@@ -96,7 +96,108 @@ int isGameEnd = 0;
 	int able_flip(int i, int j) {	// 뒤집기 가능한 칸이 있는지 확인
 		// direction[i][j]를 0으로 초기화 8(방향의 수)만큼 
 		memset(direction[i][j], 0, N);
-	
+
+		int opposing_player = (player + 1) % 2;
+		int i_flip;
+		int j_flip;
+
+		// 방향 4개: N, W, E, S
+		// N 위쪽
+		i_flip = i - 1;	// 위쪽 
+		j_flip = j;
+		while (gameboard[i_flip][j_flip] == opposing_player) {
+			i_flip -= 1; // 1 한번 더 감소 
+		}
+		// 기존의 알과 새로운 알 사이에 상대편의 알이 있다면
+		if () {
+			direction[i][j][0] = 1;
+			return 1; // 뒤집기 가능하다
+		}
+
+		// W 왼쪽
+		i_flip = i;
+		j_flip = j - 1;	 // 왼쪽  
+		while (gameboard[i_flip][j_flip] == opposing_player) {
+			j_flip = -= 1; // 1 한번 더 감소
+		}
+		if () {
+			direction[i][j][1] = 1;
+			return 1; // 뒤집기 가능하다
+		}
+
+		// E 오른쪽
+		i_flip = i;
+		j_flip = j + 1;	// 오른쪽 
+		while (gameboard[i_flip][j_flip] == opposing_player) {
+			j_flip +=1;
+		}
+		if () {
+			direction[i][j][2] = 1;
+			return 1; // 뒤집기 가능하다
+		}
+
+		// S 아래쪽
+		i_flip = i + 1;	// 아래쪽 
+		j_flip = j;
+		while (gameboard[i_flip][j_flip] == opposing_player) {
+			i_flip += 1;
+		}
+		if () {
+			direction[i][j][3] = 1;
+			return 1; // 뒤집기 가능하다
+		}
+
+		// 대각선 방향 4개: NW, NE, SW, SE 
+		// NW
+		i_flip = i - 1; // 위쪽 
+		j_flip = j - 1;	// 왼쪽 
+		while (gameboard[i_flip][j_flip] == opposing_player) {
+			i_flip -= 1;
+			j_flip -= 1;
+		}
+		if () {
+			direction[i][j][4] = 1;
+			return 1; // 뒤집기 가능하다
+		}
+
+		// NE
+		i_flip = i - 1; // 위쪽 
+		j_flip = j + 1; // 오른쪽 
+		while (gameboard[i_flip][j_flip] == opposing_player) {
+			i_flip -= 1;
+			j_flip += 1;
+		}
+		if () {
+			direction[i][j][5] = 1;
+			return 1; // 뒤집기 가능하다
+		}
+
+		// SW
+		i_flip = i + 1;	// 아래쪽  
+		j_flip = j - 1; // 왼쪽 
+		while (gameboard[i_flip][j_flip] == opposing_player) {
+			i_flip += 1; 
+			j_flip -= 1;
+		}
+		if () {
+			direction[i][j][6] = 1;
+			return 1; // 뒤집기 가능하다
+		}
+
+		// SE 
+		i_flip = i + 1; // 아래쪽  
+		j_flip = j + 1; // 오른쪽 
+		while (gameboard[i_flip][j_flip] == opposing_player) {
+
+			i_flip += 1;
+			j_flip += 1;
+		}
+		if () {
+			direction[i][j][7] = 1;
+			return 1; // 뒤집기 가능하다
+		}
+
+		return 0;
 	
 	}
 
