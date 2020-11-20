@@ -97,28 +97,9 @@ int isGameEnd = 0;
 		int i_distance;
 		int j_distance;
 
-		if (i > i_flip) {
-			i_distance = i - i_flip;
-		}
-		else if (i_flip > i) {
-			i_distance = i_flip - i;
-		}
-		else
-		{
-			i_distance = 0;
-		}
-
-		if (j > j_flip) {
-			j_distance = j - i_flip;
-		}
-		else if (j_flip > j) {
-			j_distance = j_flip - j;
-		}
-		else
-		{
-			j_distance = 0;
-		}
-
+		i_distance = abs(i - i_flip);
+		j_distance = abs(j - j_flip);
+		
 		if (i_distance > 0) {
 			return i_distance;
 		}
@@ -137,11 +118,11 @@ int isGameEnd = 0;
 		// N 위쪽
 		i_flip = i - 1;	// 위쪽 
 		j_flip = j;
-		while (gameboard[i_flip][j_flip] == opposing_player) {
+		while (over_position(i_flip, j_flip) && gameboard[i_flip][j_flip] == opposing_player) {
 			i_flip -= 1; // 1 한번 더 감소 
 		}
 		// 플립 하고자 하는 방향으로가면 현재 player의 알이 있어야함 && 현재 player의 알과 새로운 알 사이의 거리가 2보다 크거나 같아야함(1보다 커야함)(맞다아 있으면 안되기 때문에)
-		if ((gameboard[i_flip][j_flip] == player)&&(distance(i, j, i_flip, j_flip) > 1)) {
+		if (over_position(i_flip, j_flip) &&(gameboard[i_flip][j_flip] == player)&&(distance(i, j, i_flip, j_flip) > 1)) {
 			direction[i][j][0] = 1;
 			return 1; // 뒤집기 가능하다
 		}
@@ -149,10 +130,10 @@ int isGameEnd = 0;
 		// W 왼쪽
 		i_flip = i;
 		j_flip = j - 1;	 // 왼쪽  
-		while (gameboard[i_flip][j_flip] == opposing_player) {
-			j_flip = -= 1; // 1 한번 더 감소
+		while (over_position(i_flip, j_flip) &&gameboard[i_flip][j_flip] == opposing_player) {
+			j_flip -= 1; // 1 한번 더 감소
 		}
-		if ((gameboard[i_flip][j_flip] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
+		if (over_position(i_flip, j_flip) &&(gameboard[i_flip][j_flip] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
 			direction[i][j][1] = 1;
 			return 1; // 뒤집기 가능하다
 		}
@@ -160,10 +141,10 @@ int isGameEnd = 0;
 		// E 오른쪽
 		i_flip = i;
 		j_flip = j + 1;	// 오른쪽 
-		while (gameboard[i_flip][j_flip] == opposing_player) {
+		while (over_position(i_flip, j_flip) &&gameboard[i_flip][j_flip] == opposing_player) {
 			j_flip +=1;
 		}
-		if ((gameboard[i_flip][j_flip] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
+		if (over_position(i_flip, j_flip) &&(gameboard[i_flip][j_flip] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
 			direction[i][j][2] = 1;
 			return 1; // 뒤집기 가능하다
 		}
@@ -171,10 +152,10 @@ int isGameEnd = 0;
 		// S 아래쪽
 		i_flip = i + 1;	// 아래쪽 
 		j_flip = j;
-		while (gameboard[i_flip][j_flip] == opposing_player) {
+		while (over_position(i_flip, j_flip) &&gameboard[i_flip][j_flip] == opposing_player) {
 			i_flip += 1;
 		}
-		if ((gameboard[i_flip][j_flip] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
+		if (over_position(i_flip, j_flip) &&(gameboard[i_flip][j_flip] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
 			direction[i][j][3] = 1;
 			return 1; // 뒤집기 가능하다
 		}
@@ -183,11 +164,11 @@ int isGameEnd = 0;
 		// NW
 		i_flip = i - 1; // 위쪽 
 		j_flip = j - 1;	// 왼쪽 
-		while (gameboard[i_flip][j_flip] == opposing_player) {
+		while (over_position(i_flip, j_flip) &&gameboard[i_flip][j_flip] == opposing_player) {
 			i_flip -= 1;
 			j_flip -= 1;
 		}
-		if ((gameboard[i_flip][j_flip] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
+		if (over_position(i_flip, j_flip) &&(gameboard[i_flip][j_flip] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
 			direction[i][j][4] = 1;
 			return 1; // 뒤집기 가능하다
 		}
@@ -195,11 +176,11 @@ int isGameEnd = 0;
 		// NE
 		i_flip = i - 1; // 위쪽 
 		j_flip = j + 1; // 오른쪽 
-		while (gameboard[i_flip][j_flip] == opposing_player) {
+		while (over_position(i_flip, j_flip) &&gameboard[i_flip][j_flip] == opposing_player) {
 			i_flip -= 1;
 			j_flip += 1;
 		}
-		if ((gameboard[i_flip][j_flip] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
+		if (over_position(i_flip, j_flip) &&(gameboard[i_flip][j_flip] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
 			direction[i][j][5] = 1;
 			return 1; // 뒤집기 가능하다
 		}
@@ -207,11 +188,11 @@ int isGameEnd = 0;
 		// SW
 		i_flip = i + 1;	// 아래쪽  
 		j_flip = j - 1; // 왼쪽 
-		while (gameboard[i_flip][j_flip] == opposing_player) {
+		while (over_position(i_flip, j_flip) &&gameboard[i_flip][j_flip] == opposing_player) {
 			i_flip += 1; 
 			j_flip -= 1;
 		}
-		if ((gameboard[i_flip][j_flip] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
+		if (over_position(i_flip, j_flip) &&(gameboard[i_flip][j_flip] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
 			direction[i][j][6] = 1;
 			return 1; // 뒤집기 가능하다
 		}
@@ -219,12 +200,12 @@ int isGameEnd = 0;
 		// SE 
 		i_flip = i + 1; // 아래쪽  
 		j_flip = j + 1; // 오른쪽 
-		while (gameboard[i_flip][j_flip] == opposing_player) {
+		while (over_position(i_flip, j_flip) &&gameboard[i_flip][j_flip] == opposing_player) {
 
 			i_flip += 1;
 			j_flip += 1;
 		}
-		if ((gameboard[i_flip][j_flip] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
+		if (over_position(i_flip, j_flip) &&(gameboard[i_flip][j_flip] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
 			direction[i][j][7] = 1;
 			return 1; // 뒤집기 가능하다
 		}
@@ -241,7 +222,7 @@ int isGameEnd = 0;
 		
 		// 방향 4개: N, W, E, S
 		// N 위쪽
-		if (direction[i][j][0] == 1) {
+		if (direction[i][j][0]) {
 			i_flip = i - 1;	// 위쪽 
 			j_flip = j;
 			while (gameboard[i_flip][j_flip] == opposing_player){
@@ -253,11 +234,14 @@ int isGameEnd = 0;
 				score[opposing_player]--;
 				// N 방항 flip[0] 증가 
 				flip[0]++;
+				
+				i_flip -= 1;
+				
 			}
 		}
 
 		// W 왼쪽
-		if (direction[i][j][1] == 1) {
+		if (direction[i][j][1]) {
 			i_flip = i;
 			j_flip = j - 1;	 // 왼쪽  
 			while (gameboard[i_flip][j_flip] == opposing_player) {
@@ -269,11 +253,13 @@ int isGameEnd = 0;
 				score[opposing_player]--;
 				// W 방항 flip[1] 증가 
 				flip[1]++;
+				
+				j_flip -= 1;
 			}
 		}
 
 		// E 오른쪽
-		if (direction[i][j][2] == 1) {
+		if (direction[i][j][2]) {
 			i_flip = i;
 			j_flip = j + 1;	// 오른쪽 
 			while (gameboard[i_flip][j_flip] == opposing_player) {
@@ -286,11 +272,13 @@ int isGameEnd = 0;
 				score[opposing_player]--;
 				// E 방항 flip[2] 증가
 				flip[2]++;
+				
+				j_flip += 1;
 			}
 		}
 
 		// S 아래쪽
-		if (direction[i][j][3] == 1) {
+		if (direction[i][j][3]) {
 			i_flip = i + 1;	// 아래쪽 
 			j_flip = j;
 			while (gameboard[i_flip][j_flip] == opposing_player) {
@@ -303,12 +291,14 @@ int isGameEnd = 0;
 				score[opposing_player]--;
 				// S 방항 flip[3] 증가
 				flip[3]++;
+				
+				i_flip += 1;
 			}
 		}
 
 		// 대각선 방향 4개: NW, NE, SW, SE 
 		// NW
-		if (direction[i][j][4] == 1) {
+		if (direction[i][j][4]) {
 			i_flip = i - 1; // 위쪽 
 			j_flip = j - 1;	// 왼쪽 
 			while (gameboard[i_flip][j_flip] == opposing_player) {
@@ -321,11 +311,14 @@ int isGameEnd = 0;
 				score[opposing_player]--;
 				// NW 방항 flip[4] 증가
 				flip[4]++;
+				
+				i_flip -= 1;
+				j_flip -= 1;
 			}
 		}
 
 		// NE
-		if (direction[i][j][5] == 1) {
+		if (direction[i][j][5]) {
 			i_flip = i - 1; // 위쪽 
 			j_flip = j + 1; // 오른쪽 
 			while (gameboard[i_flip][j_flip] == opposing_player) {
@@ -338,11 +331,14 @@ int isGameEnd = 0;
 				score[opposing_player]--;
 				// NE 방항 flip[5] 증가
 				flip[5]++;
+				
+				i_flip -= 1;
+				j_flip += 1;
 			}
 		}
 
 		// SW
-		if (direction[i][j][6] == 1) {
+		if (direction[i][j][6]) {
 			i_flip = i + 1;	// 아래쪽  
 			j_flip = j - 1; // 왼쪽 
 			while (gameboard[i_flip][j_flip] == opposing_player) {
@@ -355,11 +351,14 @@ int isGameEnd = 0;
 				score[opposing_player]--;
 				// SW 방항 flip[6] 증가
 				flip[6]++;
+				
+				i_flip += 1;
+				j_flip -= 1;
 			}
 		}
 
 		// SE 
-		if (direction[i][j][7] == 1) {
+		if (direction[i][j][7]) {
 			i_flip = i + 1; // 아래쪽  
 			j_flip = j + 1; // 오른쪽 
 			while (gameboard[i_flip][j_flip] == opposing_player) {
@@ -372,6 +371,9 @@ int isGameEnd = 0;
 				score[opposing_player]--;
 				// SE 방항 flip[7] 증가
 				flip[7]++;
+				
+				i_flip += 1;
+				j_flip += 1;
 			}
 		}
 
@@ -404,10 +406,12 @@ int isGameEnd = 0;
 			return 0; // 0을 반환
 		}
 		// 뒤집기가 가능한 칸이 없을 경우 배치 불가능
+		/*
 		if (able_flip(i, j) == 0)
 		{
 			return 0; // 0을 반환
 		}
+		*/
 		// 그 외 
 		return 1; // 1을 반환
 	}
@@ -466,8 +470,8 @@ int isGameEnd = 0;
 		
 			if (over_position(othello_row, othello_column) == 1){ 	// 입력 좌표가 0-5, 0-5 범위 내에 있어야 함
 				
-				if (place_othello(othello_row, othello_column)){ 	// 뒤집기 시도
-				
+				if (able_flip(othello_row, othello_column)){ 	// 뒤집기 시도
+					place_othello(othello_row, othello_column);
 					print_flip(); 	// 몇개 뒤집었는지 출력
 					change_turn(); 	// 턴 바꿈
 				}
