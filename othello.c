@@ -68,11 +68,13 @@ extern int flip[8];
 
 	int change_turn(){	// player를 바꾼다.
 		// player 값을 0 1 0 1 바꿈
-		player = (player + 1) % 2;  
+		player = (player + 1) % 2;
+		
 	}
 
 
-	int input_othello(int *othello_row, int *othello_column){	// othello를 입력 받음 
+	int input_othello(int *othello_row, int *othello_column){	// othello를 입력 받음
+	
 		if(player == WHITE){	// player가 WHITE인 경우
 			printf(" put a new White othello : ");
 			scanf("%i %i", othello_row, othello_column);
@@ -86,7 +88,7 @@ extern int flip[8];
 		 
 		gameboard[othello_row][othello_column] = player;	// 해당위치에 player의 알을 둠 
 		score[player]++;
-		prompt_flip(othello_row, othello_column);			// flip 시도
+		//prompt_flip(othello_row, othello_column);			// flip 시도
 	}
 	 
 	void check_result(){	

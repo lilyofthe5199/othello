@@ -50,9 +50,9 @@ extern int position_able(int i, int j);
 		int othello_row;
 		int othello_column;
 		
-		othello(); 		// 게임 초기화
+		othello(); 				// 게임 초기화
 				
-		while (isGameEnd == 0) // Game 종료 조건 확인
+		while (isGameEnd == 0) 	// Game 종료 조건 확인
 		{ 
 			print_othello(); 	// 배치 상태, WHITE와 BLACK의 점수  출력
 			
@@ -70,20 +70,19 @@ extern int position_able(int i, int j);
 			
 			input_othello(&othello_row, &othello_column); 			//배치할 좌표 입력 받기
 		
-			if (over_position(othello_row, othello_column) == 1)   // 입력 좌표가 0-5, 0-5 범위 내에 있어야 함
+			if (over_position(othello_row, othello_column) == 1)   	// 입력 좌표가 0-5, 0-5 범위 내에 있어야 함
 			{ 	
-				if (able_flip(othello_row, othello_column))       // 뒤집기 시도
+				if (able_flip(othello_row, othello_column))       	// 뒤집기가 가능하다면  
 				{
-					while(able_flip(othello_row, othello_column))
-					//if (able_flip(othello_row, othello_column)){
+					place_othello(othello_row, othello_column);	  	// 입력받은 othello 배치 
+					
+					while(able_flip(othello_row, othello_column)) 	// 뒤집기가 가능한 동안 
 					{
-						place_othello(othello_row, othello_column);
+						prompt_flip(othello_row, othello_column); 	// 뒤집기 시도 
 					}
 					print_flip(); 	// 몇개 뒤집었는지 출력
 					change_turn(); 	// 턴 바꿈
 				}
-				
-				
 				else
 					print_wrong_input_flip(); 	// flip이 불가능한 입력임을 출력 
 			}

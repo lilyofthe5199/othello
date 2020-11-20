@@ -37,7 +37,7 @@ extern int over_position(int row, int column);
 
 	int able_flip(int i, int j) {	// 뒤집기 가능한 칸이 있는지 확인
 		// direction[i][j]를 0으로 초기화 8(방향의 수)만큼 
-		memset(direction[i][j], 0, N);
+		memset(direction, 0, sizeof(direction));
 
 		int opposing_player = (player + 1) % 2;
 		int i_flip;
@@ -51,7 +51,7 @@ extern int over_position(int row, int column);
 			i_flip -= 1; // 1 한번 더 감소 
 		}
 		// 플립 하고자 하는 방향으로가면 현재 player의 알이 있어야함 && 현재 player의 알과 새로운 알 사이의 거리가 2보다 크거나 같아야함(1보다 커야함)(맞다아 있으면 안되기 때문에)
-		if ((over_position(i_flip, j_flip) == 1) &&(gameboard[i_flip][j_flip] == player)&&(distance(i, j, i_flip, j_flip) > 1)) {
+		if ((over_position(i_flip, j_flip) == 1) &&(gameboard[i_flip][j_flip] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
 			direction[i][j][0] = 1;
 			return 1; // 뒤집기 가능하다
 		}
@@ -145,7 +145,7 @@ extern int over_position(int row, int column);
 
 	int prompt_flip(int i, int j){	// 뒤집기 시도
 	
-		memset(flip, 0, N);
+		memset(flip, 0, sizeof(flip));
 		// player 가 0 이면 상대편은 1, player가 1 이면 상대편은 0
 		int opposing_player = (player + 1) % 2;
 		int i_flip;

@@ -25,18 +25,7 @@ extern int score[2];
 		{
 			return 0; // 0을 반환
 		}
-		// 0-5의 범위를 벗어난 경우 배치 불가능 
-		if (over_position(i, j) == 0)
-		{
-			return 0; // 0을 반환
-		}
-		// 뒤집기가 가능한 칸이 없을 경우 배치 불가능
-		/*
-		if (able_flip(i, j) == 0)
-		{
-			return 0; // 0을 반환
-		}
-		*/
+		
 		// 그 외 
 		return 1; // 1을 반환
 	}
