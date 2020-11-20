@@ -93,7 +93,7 @@ int isGameEnd = 0;
 		return 1;
 	}
 
-	int distance(int i, int j, int i_flip, int j_flip{
+	int distance(int i, int j, int i_flip, int j_flip){
 		int i_distance;
 		int j_distance;
 
@@ -141,7 +141,7 @@ int isGameEnd = 0;
 			i_flip -= 1; // 1 한번 더 감소 
 		}
 		// 플립 하고자 하는 방향으로가면 현재 player의 알이 있어야함 && 현재 player의 알과 새로운 알 사이의 거리가 2보다 크거나 같아야함(1보다 커야함)(맞다아 있으면 안되기 때문에)
-		if ((gameboard[i_it][j_it] == player)&&(distance(i, j, i_flip, j_flip) > 1)) {
+		if ((gameboard[i_flip][j_flip] == player)&&(distance(i, j, i_flip, j_flip) > 1)) {
 			direction[i][j][0] = 1;
 			return 1; // 뒤집기 가능하다
 		}
@@ -152,7 +152,7 @@ int isGameEnd = 0;
 		while (gameboard[i_flip][j_flip] == opposing_player) {
 			j_flip = -= 1; // 1 한번 더 감소
 		}
-		if ((gameboard[i_it][j_it] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
+		if ((gameboard[i_flip][j_flip] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
 			direction[i][j][1] = 1;
 			return 1; // 뒤집기 가능하다
 		}
@@ -163,7 +163,7 @@ int isGameEnd = 0;
 		while (gameboard[i_flip][j_flip] == opposing_player) {
 			j_flip +=1;
 		}
-		if ((gameboard[i_it][j_it] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
+		if ((gameboard[i_flip][j_flip] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
 			direction[i][j][2] = 1;
 			return 1; // 뒤집기 가능하다
 		}
@@ -174,7 +174,7 @@ int isGameEnd = 0;
 		while (gameboard[i_flip][j_flip] == opposing_player) {
 			i_flip += 1;
 		}
-		if ((gameboard[i_it][j_it] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
+		if ((gameboard[i_flip][j_flip] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
 			direction[i][j][3] = 1;
 			return 1; // 뒤집기 가능하다
 		}
@@ -187,7 +187,7 @@ int isGameEnd = 0;
 			i_flip -= 1;
 			j_flip -= 1;
 		}
-		if ((gameboard[i_it][j_it] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
+		if ((gameboard[i_flip][j_flip] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
 			direction[i][j][4] = 1;
 			return 1; // 뒤집기 가능하다
 		}
@@ -199,7 +199,7 @@ int isGameEnd = 0;
 			i_flip -= 1;
 			j_flip += 1;
 		}
-		if ((gameboard[i_it][j_it] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
+		if ((gameboard[i_flip][j_flip] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
 			direction[i][j][5] = 1;
 			return 1; // 뒤집기 가능하다
 		}
@@ -211,7 +211,7 @@ int isGameEnd = 0;
 			i_flip += 1; 
 			j_flip -= 1;
 		}
-		if ((gameboard[i_it][j_it] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
+		if ((gameboard[i_flip][j_flip] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
 			direction[i][j][6] = 1;
 			return 1; // 뒤집기 가능하다
 		}
@@ -224,7 +224,7 @@ int isGameEnd = 0;
 			i_flip += 1;
 			j_flip += 1;
 		}
-		if ((gameboard[i_it][j_it] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
+		if ((gameboard[i_flip][j_flip] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
 			direction[i][j][7] = 1;
 			return 1; // 뒤집기 가능하다
 		}
