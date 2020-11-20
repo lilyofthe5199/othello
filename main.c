@@ -241,122 +241,138 @@ int isGameEnd = 0;
 		
 		// 방향 4개: N, W, E, S
 		// N 위쪽
-		i_flip = i - 1;	// 위쪽 
-		j_flip = j;
-		while (gameboard[i_flip][j_flip] == opposing_player){
-			// player의 알로 바뀜
-			gameboard[i_flip][j_flip] = player;
-			// player 점수 증가 
-			score[player]++;
-			// 상대 player 점수 감소 
-			score[opposing_player]--;
-			// N 방항 flip[0] 증가 
-			flip[0]++;
+		if (direction[i][j][0] == 1) {
+			i_flip = i - 1;	// 위쪽 
+			j_flip = j;
+			while (gameboard[i_flip][j_flip] == opposing_player){
+				// player의 알로 바뀜
+				gameboard[i_flip][j_flip] = player;
+				// player 점수 증가 
+				score[player]++;
+				// 상대 player 점수 감소 
+				score[opposing_player]--;
+				// N 방항 flip[0] 증가 
+				flip[0]++;
+			}
 		}
 
 		// W 왼쪽
-		i_flip = i;
-		j_flip = j - 1;	 // 왼쪽  
-		while (gameboard[i_flip][j_flip] == opposing_player){
-			// player의 알로 바뀜
-			gameboard[i_flip][j_flip] = player;
-			// player 점수 증가 
-			score[player]++;
-			// 상대 player 점수 감소 
-			score[opposing_player]--;
-			// W 방항 flip[1] 증가 
-			flip[1]++;
+		if (direction[i][j][1] == 1) {
+			i_flip = i;
+			j_flip = j - 1;	 // 왼쪽  
+			while (gameboard[i_flip][j_flip] == opposing_player) {
+				// player의 알로 바뀜
+				gameboard[i_flip][j_flip] = player;
+				// player 점수 증가 
+				score[player]++;
+				// 상대 player 점수 감소 
+				score[opposing_player]--;
+				// W 방항 flip[1] 증가 
+				flip[1]++;
+			}
 		}
 
 		// E 오른쪽
-		i_flip = i;
-		j_flip = j + 1;	// 오른쪽 
-		while (gameboard[i_flip][j_flip] == opposing_player){
+		if (direction[i][j][2] == 1) {
+			i_flip = i;
+			j_flip = j + 1;	// 오른쪽 
+			while (gameboard[i_flip][j_flip] == opposing_player) {
 
-			// player의 알로 바뀜
-			gameboard[i_flip][j_flip] = player;
-			// player 점수 증가 
-			score[player]++;
-			// 상대 player 점수 감소 
-			score[opposing_player]--;
-			// E 방항 flip[2] 증가
-			flip[2]++;
+				// player의 알로 바뀜
+				gameboard[i_flip][j_flip] = player;
+				// player 점수 증가 
+				score[player]++;
+				// 상대 player 점수 감소 
+				score[opposing_player]--;
+				// E 방항 flip[2] 증가
+				flip[2]++;
+			}
 		}
 
 		// S 아래쪽
-		i_flip = i + 1;	// 아래쪽 
-		j_flip = j;
-		while (gameboard[i_flip][j_flip] == opposing_player){
+		if (direction[i][j][3] == 1) {
+			i_flip = i + 1;	// 아래쪽 
+			j_flip = j;
+			while (gameboard[i_flip][j_flip] == opposing_player) {
 
-			// player의 알로 바뀜
-			gameboard[i_flip][j_flip] = player;
-			// player 점수 증가 
-			score[player]++;
-			// 상대 player 점수 감소 
-			score[opposing_player]--;
-			// S 방항 flip[3] 증가
-			flip[3]++;
+				// player의 알로 바뀜
+				gameboard[i_flip][j_flip] = player;
+				// player 점수 증가 
+				score[player]++;
+				// 상대 player 점수 감소 
+				score[opposing_player]--;
+				// S 방항 flip[3] 증가
+				flip[3]++;
+			}
 		}
 
 		// 대각선 방향 4개: NW, NE, SW, SE 
 		// NW
-		i_flip = i - 1; // 위쪽 
-		j_flip = j - 1;	// 왼쪽 
-		while (gameboard[i_flip][j_flip] == opposing_player){
+		if (direction[i][j][4] == 1) {
+			i_flip = i - 1; // 위쪽 
+			j_flip = j - 1;	// 왼쪽 
+			while (gameboard[i_flip][j_flip] == opposing_player) {
 
-			// player의 알로 바뀜
-			gameboard[i_flip][j_flip] = player;
-			// player 점수 증가 
-			score[player]++;
-			// 상대 player 점수 감소 
-			score[opposing_player]--;
-			// NW 방항 flip[4] 증가
-			flip[4]++;
+				// player의 알로 바뀜
+				gameboard[i_flip][j_flip] = player;
+				// player 점수 증가 
+				score[player]++;
+				// 상대 player 점수 감소 
+				score[opposing_player]--;
+				// NW 방항 flip[4] 증가
+				flip[4]++;
+			}
 		}
 
 		// NE
-		i_flip = i - 1; // 위쪽 
-		j_flip = j + 1; // 오른쪽 
-		while (gameboard[i_flip][j_flip] == opposing_player){
+		if (direction[i][j][5] == 1) {
+			i_flip = i - 1; // 위쪽 
+			j_flip = j + 1; // 오른쪽 
+			while (gameboard[i_flip][j_flip] == opposing_player) {
 
-			// player의 알로 바뀜
-			gameboard[i_flip][j_flip] = player;
-			// player 점수 증가 
-			score[player]++;
-			// 상대 player 점수 감소 
-			score[opposing_player]--;
-			// NE 방항 flip[5] 증가
-			flip[5]++;
+				// player의 알로 바뀜
+				gameboard[i_flip][j_flip] = player;
+				// player 점수 증가 
+				score[player]++;
+				// 상대 player 점수 감소 
+				score[opposing_player]--;
+				// NE 방항 flip[5] 증가
+				flip[5]++;
+			}
 		}
 
 		// SW
-		i_flip = i + 1;	// 아래쪽  
-		j_flip = j - 1; // 왼쪽 
-		while (gameboard[i_flip][j_flip] == opposing_player){
+		if (direction[i][j][6] == 1) {
+			i_flip = i + 1;	// 아래쪽  
+			j_flip = j - 1; // 왼쪽 
+			while (gameboard[i_flip][j_flip] == opposing_player) {
 
-			// player의 알로 바뀜
-			gameboard[i_flip][j_flip] = player;
-			// player 점수 증가 
-			score[player]++;
-			// 상대 player 점수 감소 
-			score[opposing_player]--;
-			// SW 방항 flip[6] 증가
-			flip[6]++;
+				// player의 알로 바뀜
+				gameboard[i_flip][j_flip] = player;
+				// player 점수 증가 
+				score[player]++;
+				// 상대 player 점수 감소 
+				score[opposing_player]--;
+				// SW 방항 flip[6] 증가
+				flip[6]++;
+			}
 		}
 
 		// SE 
-		i_flip = i + 1; // 아래쪽  
-		j_flip = j + 1; // 오른쪽 
-		while (gameboard[i_flip][j_flip] == opposing_player){
-			
-			// player의 알로 바뀜
-			gameboard[i_flip][j_flip] = player;
-			// player 점수 증가 
-			score[player]++;
-			// 상대 player 점수 감소 
-			score[opposing_player]--;
-			// SE 방항 flip[7] 증가
-			flip[7]++;
+		if (direction[i][j][7] == 1) {
+			i_flip = i + 1; // 아래쪽  
+			j_flip = j + 1; // 오른쪽 
+			while (gameboard[i_flip][j_flip] == opposing_player) {
+
+				// player의 알로 바뀜
+				gameboard[i_flip][j_flip] = player;
+				// player 점수 증가 
+				score[player]++;
+				// 상대 player 점수 감소 
+				score[opposing_player]--;
+				// SE 방항 flip[7] 증가
+				flip[7]++;
+			}
 		}
 
 	
