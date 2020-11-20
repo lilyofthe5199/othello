@@ -93,6 +93,38 @@ int isGameEnd = 0;
 		return 1;
 	}
 
+	int distance(int i, int j, int i_flip, int j_flip{
+		int i_distance;
+		int j_distance;
+
+		if (i > i_flip) {
+			i_distance = i - i_flip;
+		}
+		else if (i_flip > i) {
+			i_distance = i_flip - i;
+		}
+		else
+		{
+			i_distance = 0;
+		}
+
+		if (j > j_flip) {
+			j_distance = j - i_flip;
+		}
+		else if (j_flip > j) {
+			j_distance = j_flip - j;
+		}
+		else
+		{
+			j_distance = 0;
+		}
+
+		if (i_distance > 0) {
+			return i_distance;
+		}
+		return j_distance;
+	}
+
 	int able_flip(int i, int j) {	// 뒤집기 가능한 칸이 있는지 확인
 		// direction[i][j]를 0으로 초기화 8(방향의 수)만큼 
 		memset(direction[i][j], 0, N);
@@ -108,8 +140,8 @@ int isGameEnd = 0;
 		while (gameboard[i_flip][j_flip] == opposing_player) {
 			i_flip -= 1; // 1 한번 더 감소 
 		}
-		// 기존의 알과 새로운 알 사이에 상대편의 알이 있다면
-		if () {
+		// 플립 하고자 하는 방향으로가면 현재 player의 알이 있어야함 && 현재 player의 알과 새로운 알 사이의 거리가 2보다 크거나 같아야함(1보다 커야함)(맞다아 있으면 안되기 때문에)
+		if ((gameboard[i_it][j_it] == player)&&(distance(i, j, i_flip, j_flip) > 1)) {
 			direction[i][j][0] = 1;
 			return 1; // 뒤집기 가능하다
 		}
