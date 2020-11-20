@@ -197,7 +197,7 @@ int isGameEnd = 0;
 			return 1; // 뒤집기 가능하다
 		}
 
-		return 0;
+		return 0; // 뒤집기 불가능하면 0 반환
 	
 	}
 
@@ -352,6 +352,11 @@ int isGameEnd = 0;
 		}
 		// 0-5의 범위를 벗어난 경우 배치 불가능 
 		if (over_position(i, j) == 0)
+		{
+			return 0; // 0을 반환
+		}
+		// 뒤집기가 가능한 칸이 없을 경우 배치 불가능
+		if (able_flip(i, j) == 0)
 		{
 			return 0; // 0을 반환
 		}
