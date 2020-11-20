@@ -9,9 +9,6 @@
 #define BLACK 1
 #define EMPTY 2	// 비어있음 
 
-#define FALSE 0
-#define TRUE 1
-
 // gameboard[i][j]
 char gameboard[N][N];
 
@@ -94,6 +91,13 @@ int isGameEnd = 0;
 			return 0;
 		}
 		return 1;
+	}
+
+	int able_flip(int i, int j) {	// 뒤집기 가능한 칸이 있는지 확인
+		// direction[i][j]를 0으로 초기화 8(방향의 수)만큼 
+		memset(direction[i][j], 0, N);
+	
+	
 	}
 
 	int prompt_flip(int i, int j){	// 뒤집기 시도
