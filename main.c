@@ -215,6 +215,7 @@ int isGameEnd = 0;
 	}
 
 	int prompt_flip(int i, int j){	// 뒤집기 시도
+		memset(flip, 0, N);
 		// player 가 0 이면 상대편은 1, player가 1 이면 상대편은 0
 		int opposing_player = (player + 1) % 2;
 		int i_flip;
