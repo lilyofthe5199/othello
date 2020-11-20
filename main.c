@@ -58,14 +58,8 @@ extern int position_able(int i, int j);
 			
 			if (position_able(row, column) == 0) // 배치가능한 칸이 있는지 확인
 			{ 	
-										// 비어있는 칸 없음
-										// WHITE가 없음
-										// BLACK이 없음
-
-										// 뒤집기 가능한 칸이 없음??
-										
 				isGameEnd = 1; 	// 게임 종료
-				continue;	 	// 두 player 모두 배치가 불가능하면 반복문을 빠져나가야 함
+				continue;	 	// 두 player 모두 배치가 불가능하면 반복문을 빠져나가야 함							
 			}
 			
 			input_othello(&othello_row, &othello_column); 			//배치할 좌표 입력 받기
