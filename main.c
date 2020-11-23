@@ -15,10 +15,10 @@ char gameboard[N][N];
 // direction 
 int direction[N][N][8]; // i, j 위치에서 방향 8개: N, W, E, S, NW, NE, SW, SE
 
-int score[2];	// WHITE와 BLACK의 score
-int player;
-int flip[8];
-int isGameEnd = 0;
+int score[2];		// WHITE와 BLACK의 score
+int player;			// player
+int flip[8];		// 방향 8개: N, W, E, S, NW, NE, SW, SE
+int isGameEnd = 0;	// 초기에 isGameEnd는 0 
 
 // flip.c
 extern int distance(int i, int j, int i_flip, int j_flip);
@@ -55,22 +55,21 @@ extern int position_able(int i, int j);
 		while (isGameEnd == 0) 	// Game 종료 조건 확인
 		{ 
 			print_othello(); 	// 배치 상태, WHITE와 BLACK의 점수  출력
-			
 			if (position_able(row, column) == 0) // 배치가능한 칸이 있는지 확인
 			{ 	
 				isGameEnd = 1; 	// 게임 종료
 				continue;	 	// 두 player 모두 배치가 불가능하면 반복문을 빠져나가야 함							
 			}
 			
-			input_othello(&othello_row, &othello_column); 			//배치할 좌표 입력 받기
+			input_othello(&othello_row, &othello_column);			//배치할 좌표 입력 받기
 		
-			if (over_position(othello_row, othello_column) == 1)   	// 입력 좌표가 0-5, 0-5 범위 내에 있어야 함
+			if (over_position(othello_row, othello_column) == 1)	// 입력 좌표가 0-5, 0-5 범위 내에 있어야 함
 			{ 	
-				if (able_flip(othello_row, othello_column))       	// 뒤집기가 가능하다면  
+				if (able_flip(othello_row, othello_column))			// 뒤집기가 가능하다면  
 				{
-					place_othello(othello_row, othello_column);	  	// 입력받은 othello 배치 
+					place_othello(othello_row, othello_column);		// 입력받은 othello 배치 
 					
-					while(able_flip(othello_row, othello_column)) 	// 뒤집기가 가능한 동안 
+					while(able_flip(othello_row, othello_column))	// 뒤집기가 가능한 동안 
 					{
 						prompt_flip(othello_row, othello_column); 	// 뒤집기 시도 
 					}
@@ -81,10 +80,7 @@ extern int position_able(int i, int j);
 					print_wrong_input_flip(); 	// flip이 불가능한 입력임을 출력 
 			}
 			else
-				print_wrong_input_range(); 		// 0-5범위를 벗어나는 입력임을 출력 
-					
+				print_wrong_input_range(); 		// 0-5범위를 벗어나는 입력임을 출력 			
 		}
-		
 		check_result();		// 결과 출력 
-
 	}

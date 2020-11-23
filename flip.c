@@ -28,15 +28,15 @@ extern int over_position(int row, int column);
 		i_distance = abs(i - i_flip);
 		j_distance = abs(j - j_flip);
 		
-		if (i_distance > 0) {
-			return i_distance;
-		}
-		return j_distance;
+		if (i_distance > 0) {	// i_distance가 1, 2, 3...이면
+			return i_distance;	// i_distance 반환 
+		}						// i_distance가 0이면 
+		return j_distance;		// j_distance 반환
 	}
 
 
 	int able_flip(int i, int j) {	// 뒤집기 가능한 칸이 있는지 확인
-		// direction[i][j]를 0으로 초기화 8(방향의 수)만큼 
+		// direction[i][j]를 0으로 초기화 direction의 사이즈 만큼 
 		memset(direction, 0, sizeof(direction));
 
 		int opposing_player = (player + 1) % 2;
@@ -50,10 +50,10 @@ extern int over_position(int row, int column);
 		while ((over_position(i_flip, j_flip)==1) && gameboard[i_flip][j_flip] == opposing_player) {
 			i_flip -= 1; // 1 한번 더 감소 
 		}
-		// 플립 하고자 하는 방향으로가면 현재 player의 알이 있어야함 && 현재 player의 알과 새로운 알 사이의 거리가 2보다 크거나 같아야함(1보다 커야함)(맞다아 있으면 안되기 때문에)
+		// 플립 하고자 하는 방향으로가면 현재 player의 알이 있어야함 && 현재 player의 알과 새로운 알 사이의 거리가 2보다 크거나 같아야함(연달아 있으면 안되기 때문에 1보다 커야함)
 		if ((over_position(i_flip, j_flip) == 1) &&(gameboard[i_flip][j_flip] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
 			direction[i][j][0] = 1;
-			return 1; // 뒤집기 가능하다
+			return 1; // 뒤집기 가능하면 1 반환
 		}
 
 		// W 왼쪽
@@ -64,29 +64,29 @@ extern int over_position(int row, int column);
 		}
 		if ((over_position(i_flip, j_flip) == 1) &&(gameboard[i_flip][j_flip] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
 			direction[i][j][1] = 1;
-			return 1; // 뒤집기 가능하다
+			return 1; // 뒤집기 가능하면 1 반환
 		}
 
 		// E 오른쪽
 		i_flip = i;
 		j_flip = j + 1;	// 오른쪽 
 		while ((over_position(i_flip, j_flip) == 1) &&gameboard[i_flip][j_flip] == opposing_player) {
-			j_flip +=1;
+			j_flip += 1;// 1 한번 더 증가  
 		}
 		if ((over_position(i_flip, j_flip) == 1) &&(gameboard[i_flip][j_flip] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
 			direction[i][j][2] = 1;
-			return 1; // 뒤집기 가능하다
+			return 1; // 뒤집기 가능하면 1 반환
 		}
 
 		// S 아래쪽
 		i_flip = i + 1;	// 아래쪽 
 		j_flip = j;
 		while ((over_position(i_flip, j_flip) == 1) &&gameboard[i_flip][j_flip] == opposing_player) {
-			i_flip += 1;
+			i_flip += 1;// 1 한번 더 증가
 		}
 		if ((over_position(i_flip, j_flip) == 1) &&(gameboard[i_flip][j_flip] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
 			direction[i][j][3] = 1;
-			return 1; // 뒤집기 가능하다
+			return 1; // 뒤집기 가능하면 1 반환
 		}
 
 		// 대각선 방향 4개: NW, NE, SW, SE 
@@ -94,49 +94,48 @@ extern int over_position(int row, int column);
 		i_flip = i - 1; // 위쪽 
 		j_flip = j - 1;	// 왼쪽 
 		while ((over_position(i_flip, j_flip) == 1) &&gameboard[i_flip][j_flip] == opposing_player) {
-			i_flip -= 1;
-			j_flip -= 1;
+			i_flip -= 1;// 1 한번 더 감소
+			j_flip -= 1;// 1 한번 더 감소
 		}
 		if ((over_position(i_flip, j_flip) == 1) &&(gameboard[i_flip][j_flip] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
 			direction[i][j][4] = 1;
-			return 1; // 뒤집기 가능하다
+			return 1; // 뒤집기 가능하면 1 반환
 		}
 
 		// NE
 		i_flip = i - 1; // 위쪽 
 		j_flip = j + 1; // 오른쪽 
 		while ((over_position(i_flip, j_flip) == 1) &&gameboard[i_flip][j_flip] == opposing_player) {
-			i_flip -= 1;
-			j_flip += 1;
+			i_flip -= 1;// 1 한번 더 감소
+			j_flip += 1;// 1 한번 더 증가
 		}
 		if ((over_position(i_flip, j_flip) == 1) &&(gameboard[i_flip][j_flip] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
 			direction[i][j][5] = 1;
-			return 1; // 뒤집기 가능하다
+			return 1; // 뒤집기 가능하면 1 반환
 		}
 
 		// SW
 		i_flip = i + 1;	// 아래쪽  
 		j_flip = j - 1; // 왼쪽 
 		while ((over_position(i_flip, j_flip) == 1) &&gameboard[i_flip][j_flip] == opposing_player) {
-			i_flip += 1; 
-			j_flip -= 1;
+			i_flip += 1;// 1 한번 더 증가
+			j_flip -= 1;// 1 한번 더 감소
 		}
 		if ((over_position(i_flip, j_flip) == 1) &&(gameboard[i_flip][j_flip] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
 			direction[i][j][6] = 1;
-			return 1; // 뒤집기 가능하다
+			return 1; // 뒤집기 가능하면 1 반환
 		}
 
 		// SE 
 		i_flip = i + 1; // 아래쪽  
 		j_flip = j + 1; // 오른쪽 
 		while ((over_position(i_flip, j_flip) == 1) &&gameboard[i_flip][j_flip] == opposing_player) {
-
-			i_flip += 1;
-			j_flip += 1;
+			i_flip += 1;// 1 한번 더 증가
+			j_flip += 1;// 1 한번 더 증가
 		}
 		if ((over_position(i_flip, j_flip) == 1) &&(gameboard[i_flip][j_flip] == player) && (distance(i, j, i_flip, j_flip) > 1)) {
 			direction[i][j][7] = 1;
-			return 1; // 뒤집기 가능하다
+			return 1; // 뒤집기 가능하면 1 반환
 		}
 
 		return 0; // 뒤집기 불가능하면 0 반환
@@ -144,8 +143,9 @@ extern int over_position(int row, int column);
 	}
 
 	int prompt_flip(int i, int j){	// 뒤집기 시도
-	
+		// flip을 0으로 초기화 flip의 사이즈 만큼 
 		memset(flip, 0, sizeof(flip));
+		
 		// player 가 0 이면 상대편은 1, player가 1 이면 상대편은 0
 		int opposing_player = (player + 1) % 2;
 		int i_flip;
@@ -166,7 +166,7 @@ extern int over_position(int row, int column);
 				// N 방항 flip[0] 증가 
 				flip[0]++;
 				
-				i_flip -= 1;
+				i_flip -= 1;	// 1 한번 더 감소
 				
 			}
 		}
@@ -185,7 +185,7 @@ extern int over_position(int row, int column);
 				// W 방항 flip[1] 증가 
 				flip[1]++;
 				
-				j_flip -= 1;
+				j_flip -= 1;	// 1 한번 더 감소
 			}
 		}
 
@@ -204,7 +204,7 @@ extern int over_position(int row, int column);
 				// E 방항 flip[2] 증가
 				flip[2]++;
 				
-				j_flip += 1;
+				j_flip += 1;	// 1 한번 더 증가 
 			}
 		}
 
@@ -223,7 +223,7 @@ extern int over_position(int row, int column);
 				// S 방항 flip[3] 증가
 				flip[3]++;
 				
-				i_flip += 1;
+				i_flip += 1;	// 1 한번 더 증가 
 			}
 		}
 
@@ -243,8 +243,8 @@ extern int over_position(int row, int column);
 				// NW 방항 flip[4] 증가
 				flip[4]++;
 				
-				i_flip -= 1;
-				j_flip -= 1;
+				i_flip -= 1;	// 1 한번 더 감소
+				j_flip -= 1;	// 1 한번 더 감소
 			}
 		}
 
@@ -263,8 +263,8 @@ extern int over_position(int row, int column);
 				// NE 방항 flip[5] 증가
 				flip[5]++;
 				
-				i_flip -= 1;
-				j_flip += 1;
+				i_flip -= 1;	// 1 한번 더 감소
+				j_flip += 1;	// 1 한번 더 증가 
 			}
 		}
 
@@ -283,8 +283,8 @@ extern int over_position(int row, int column);
 				// SW 방항 flip[6] 증가
 				flip[6]++;
 				
-				i_flip += 1;
-				j_flip -= 1;
+				i_flip += 1;	// 1 한번 더 증가 
+				j_flip -= 1;	// 1 한번 더 감소
 			}
 		}
 
@@ -303,8 +303,8 @@ extern int over_position(int row, int column);
 				// SE 방항 flip[7] 증가
 				flip[7]++;
 				
-				i_flip += 1;
-				j_flip += 1;
+				i_flip += 1;	// 1 한번 더 증가 
+				j_flip += 1;	// 1 한번 더 증가 
 			}
 		}
 	}
