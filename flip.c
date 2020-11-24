@@ -7,7 +7,7 @@
 
 #define WHITE 0
 #define BLACK 1
-#define EMPTY 2	// 비어있음 
+#define EMPTY 2 
 
 // gameboard[i][j]
 extern char gameboard[N][N];

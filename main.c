@@ -27,8 +27,9 @@ extern int prompt_flip(int i, int j);
 extern void print_flip();
 
 // print_wrong_input.c
-extern int print_wrong_input_flip();
 extern int print_wrong_input_range();
+extern int print_wrong_input_occupied();
+extern int print_wrong_input_flip();
 
 // othello.c
 extern int othello();
@@ -41,6 +42,7 @@ extern void check_result();
 // position.c
 extern int over_position(int row, int column);
 extern int position_able(int i, int j);
+extern int occupied_position(othello_row, othello_column);
 
 	int main()
 	{
@@ -65,19 +67,25 @@ extern int position_able(int i, int j);
 		
 			if (over_position(othello_row, othello_column) == 1)	// 입력 좌표가 0-5, 0-5 범위 내에 있어야 함
 			{ 	
-				if (able_flip(othello_row, othello_column))			// 뒤집기가 가능하다면  
+				if (occupied_position(othello_row, othello_column) == 1)
 				{
-					place_othello(othello_row, othello_column);		// 입력받은 othello 배치 
-					
-					while(able_flip(othello_row, othello_column))	// 뒤집기가 가능한 동안 
+					if (able_flip(othello_row, othello_column))			// 뒤집기가 가능하다면  
 					{
-						prompt_flip(othello_row, othello_column); 	// 뒤집기 시도 
+						place_othello(othello_row, othello_column);		// 입력받은 othello 배치 
+						
+						while(able_flip(othello_row, othello_column))	// 뒤집기가 가능한 동안 
+						{
+							prompt_flip(othello_row, othello_column); 	// 뒤집기 시도 
+						}
+						print_flip(); 	// 몇개 뒤집었는지 출력
+						change_turn(); 	// 턴 바꿈
 					}
-					print_flip(); 	// 몇개 뒤집었는지 출력
-					change_turn(); 	// 턴 바꿈
+					else
+						print_wrong_input_flip(); 	// flip이 불가능한 입력임을 출력
 				}
 				else
-					print_wrong_input_flip(); 	// flip이 불가능한 입력임을 출력 
+					print_wrong_input_occupied();
+	 
 			}
 			else
 				print_wrong_input_range(); 		// 0-5범위를 벗어나는 입력임을 출력 			

@@ -6,6 +6,7 @@
 	
 #define WHITE 0
 #define BLACK 1
+#define EMPTY 2
 	
 extern char gameboard[N][N];
 extern int score[2];
@@ -16,6 +17,15 @@ extern int score[2];
 			return 0; 	// 0을 반환
 		}
 		// 범위를 벗어나지 않은 경우 
+		return 1; 		// 1을 반환
+	}
+
+	int occupied_position(othello_row, othello_column){	// 빈 공간에 배치 해야함   
+		// 이미 WHITE 또는 BLACK이 있는 경우 
+		if ((gameboard[othello_row][othello_column] == WHITE) || (gameboard[othello_row][othello_column] == BLACK)){
+			return 0; 	// 0을 반환
+		}
+		// 비어있는 경우 
 		return 1; 		// 1을 반환
 	}
 
