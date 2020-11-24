@@ -7,8 +7,7 @@
 
 #define WHITE 0
 #define BLACK 1
-#define EMPTY 2	
-
+#define EMPTY 2
 
 extern char gameboard[N][N];
 extern int direction[N][N][8];
@@ -87,8 +86,7 @@ extern int flip[8];
 	int place_othello(int othello_row, int othello_column){
 		 
 		gameboard[othello_row][othello_column] = player;	// 해당위치에 player의 알을 둠 
-		score[player]++;
-		//prompt_flip(othello_row, othello_column);			// flip 시도
+		score[player]++;		// player의 점수 증가  
 	}
 	 
 	void check_result(){	
