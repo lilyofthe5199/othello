@@ -19,13 +19,11 @@ extern int score[2];
 	}
 
 	int position_able(int i, int j){	// 배치가능한 칸이 있는지 확인
-	
-		// gameboard가 비어있지 않거나 WHITE의 점수가 0 이거나 BLACK의 점수가 0인 경우 배치 불가능 
-		if ((gameboard[i][j] != EMPTY) || (score[WHITE] == 0) || (score[BLACK] == 0))
+	// WHITE의 점수가 0 이거나 BLACK의 점수가 0 이거나 비어있는 칸이 없는 경우(WHITE와 BLACK의 점수의 합이 N*N이 된 경우)  배치 불가능
+		if ((score[WHITE] == 0) || (score[BLACK] == 0)|| (score[WHITE] + score[BLACK] == N * N))
 		{
 			return 0; // 0을 반환
 		}
-		
 		// 그 외 
 		return 1; // 1을 반환
 	}
