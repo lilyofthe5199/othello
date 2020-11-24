@@ -84,11 +84,10 @@ extern int occupied_position(othello_row, othello_column);
 						print_wrong_input_flip(); 	// flip이 불가능한 입력임을 출력
 				}
 				else
-					print_wrong_input_occupied();
-	 
+					print_wrong_input_occupied();	// 빈 공간이 아님을 출력 
 			}
 			else
-				print_wrong_input_range(); 		// 0-5범위를 벗어나는 입력임을 출력 			
+				print_wrong_input_range(); 			// 0-5범위를 벗어나는 입력임을 출력 			
 		}
 		check_result();		// 결과 출력 
 	}
