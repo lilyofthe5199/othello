@@ -20,6 +20,7 @@ int player;			// player
 int flip[8];		// 방향 8개: N, W, E, S, NW, NE, SW, SE
 int isGameEnd = 0;	// 초기에 isGameEnd는 0 
 
+
 // flip.c
 extern int distance(int i, int j, int i_flip, int j_flip);
 extern int able_flip(int i, int j);
